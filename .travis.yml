@@ -162,7 +162,7 @@ matrix:
       dist: xenial
       arch: arm64
       install:
-        - sudo apt-get install -qq libc6-dev-i386 gcc-multilib
+        - sudo apt-get install -qq libc6 gcc-multilib
       script:
         - make -C tests test-lz4 clean test-lz4c32 MOREFLAGS=-Werror
     
@@ -173,7 +173,7 @@ matrix:
       virt: lxd
       group: edge
       install:
-        - sudo apt-get install -qq libc6-dev-i386 gcc-multilib
+        - sudo apt-get install -qq gcc-multilib
       script:
         - make -C tests test-lz4 clean test-lz4c32 MOREFLAGS=-Werror
     
