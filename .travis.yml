@@ -124,10 +124,23 @@ matrix:
         - make platformTest CC=aarch64-linux-gnu-gcc QEMU_SYS=qemu-aarch64-static
 
     - name: aarch64 real-hw tests
+      arch: amd64
+      script:
+        - make test
+    
+    - name: aarch64 real-hw tests
       arch: arm64
       script:
         - make test
 
+    - name: aarch64 real-hw tests
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      dist: xenial
+      script:
+        - make test
+    
     - name: PPC64LE real-hw tests
       arch: ppc64le
       script:
@@ -145,8 +158,55 @@ matrix:
       script:
         - make -C tests test-lz4 clean test-lz4c32 MOREFLAGS=-Werror
 
+    - name: (Xenial) gcc-5 compilation
+      dist: xenial
+      arch: arm64
+      install:
+        - sudo apt-get install -qq libc6-dev-i386 gcc-multilib
+      script:
+        - make -C tests test-lz4 clean test-lz4c32 MOREFLAGS=-Werror
+    
+    
+    - name: (Xenial) gcc-5 compilation
+      dist: xenial
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      install:
+        - sudo apt-get install -qq libc6-dev-i386 gcc-multilib
+      script:
+        - make -C tests test-lz4 clean test-lz4c32 MOREFLAGS=-Werror
+    
     - name: (Trusty) clang-3.8 compilation
       dist: trusty
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.8
+          packages:
+            - clang-3.8
+      script:
+        - make -C tests test-lz4 CC=clang-3.8
+    
+    - name: (Trusty) clang-3.8 compilation
+      dist: trusty
+      arch: arm64
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.8
+          packages:
+            - clang-3.8
+      script:
+        - make -C tests test-lz4 CC=clang-3.8
+    
+    - name: (Trusty) clang-3.8 compilation
+      dist: trusty
+      arch: arm64-graviton2
+      virt: lxd
+      group: edge
       addons:
         apt:
           sources:
