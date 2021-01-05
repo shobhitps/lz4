@@ -17,6 +17,18 @@ matrix:
       dist: precise
       script:
         - make -C tests test-lz4 test-lz4c test-fullbench
+    - name: (Precise) benchmark test
+      arch: arm64
+      dist: precise
+      script:
+        - make -C tests test-lz4 test-lz4c test-fullbench
+    - name: (Precise) benchmark test
+      arch: arm64-graviton2
+      group: edge
+      virt: lxd
+      dist: precise
+      script:
+        - make -C tests test-lz4 test-lz4c test-fullbench
 
     - name: (Precise) frame and fuzzer test
       dist: precise
