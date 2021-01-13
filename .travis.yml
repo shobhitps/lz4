@@ -217,7 +217,7 @@ matrix:
     - name: aarch64 real-hw tests
       arch: amd64
       script:
-        - make test
+        - make -j32 test
     
     - name: aarch64 real-hw tests
       arch: arm64
@@ -230,7 +230,7 @@ matrix:
       group: edge
       dist: xenial
       script:
-        - make test
+        - make -j32 test
     
     - name: PPC64LE real-hw tests
       arch: ppc64le
